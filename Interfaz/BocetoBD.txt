@@ -1,5 +1,3 @@
-
-
 CREATE TABLE Solicitudes (
     Folio INT AUTO_INCREMENT PRIMARY KEY,
     Area_del_Solicitante VARCHAR(255) NOT NULL,
