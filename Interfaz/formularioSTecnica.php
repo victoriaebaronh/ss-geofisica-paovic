@@ -4,7 +4,9 @@
     <title>Formulario enviado</title>
 </head>
 <body>
+
     <?php
+
     // Definir una función para validar y limpiar los datos del formulario
     function test_input($data) {
         $data = trim($data);
@@ -13,9 +15,8 @@
         return $data;
     }
 
-    // Verificar si el formulario ha sido enviado
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Procesar y guardar datos en la base de datos (conexión a la base de datos)
+    // Función para conectar a la base de datos
+    function conectarBD() {
         $servername = "localhost";
         $username = "root";
         $password = "Paolataemylove25";
@@ -28,6 +29,31 @@
         if ($conn->connect_error) {
             die("Conexión fallida: " . $conn->connect_error);
         }
+        return $conn;
+    }
+
+    // Conectar a la base de datos para obtener el último folio
+    $conn = conectarBD();
+    $sql_ultimo_folio = "SELECT MAX(folio) AS max_folio FROM Solicitudes";
+    $result_ultimo_folio = $conn->query($sql_ultimo_folio);
+
+    if ($result_ultimo_folio) {
+        $row = $result_ultimo_folio->fetch_assoc();
+        $ultimo_folio = $row['max_folio'];
+        // Incrementa el último folio en 1 para el nuevo registro
+        $new_folio = $ultimo_folio + 1;
+    } else {
+        $new_folio = 1; // Si no hay registros en la base de datos, comienza en 1
+    }
+    // Cerrar la conexión a la base de datos
+    $conn->close();
+
+    
+    // Verificar si el formulario ha sido enviado
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+        // conectar a la base de datos
+        $conn = conectarBD();
 
         // Limpiar y obtener los datos del formulario
         $area_solicitante = test_input($_POST["area_solicitante"]);
@@ -51,7 +77,6 @@
             $stmt->bind_param("sssssss", $area_solicitante, $responsable_area, $telefono, $fecha_solicitud, $correo_electronico, $descripcion, $nombre_usuario);
 
             // Ejecutar la consulta
-            // Ejecutar la consulta
             if ($stmt->execute()) {
                 // Obtener el valor del folio generado por la base de datos
                 $folioGenerado = $conn->insert_id;
@@ -72,7 +97,6 @@
             } else {
                 echo "Error al insertar datos en la base de datos: " . $stmt->error;
             }
-
 
             // Cerrar la consulta preparada
             $stmt->close();
