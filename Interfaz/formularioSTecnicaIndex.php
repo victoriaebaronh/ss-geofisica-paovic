@@ -1,5 +1,39 @@
+<?php
+// Función para conectar a la base de datos
+    function conectarBD() {
+        $servername = "localhost";
+        $username = "root";
+        $password = "Paolataemylove25";
+        $database = "Solicitudes";
 
-<!doctype html>
+        // Crear una conexión a la base de datos
+        $conn = new mysqli($servername, $username, $password, $database);
+
+        // Verificar la conexión
+        if ($conn->connect_error) {
+            die("Conexión fallida: " . $conn->connect_error);
+        }
+        return $conn;
+    }
+
+    // Conectar a la base de datos para obtener el último folio
+    $conn = conectarBD();
+    $sql_ultimo_folio = "SELECT MAX(folio) AS max_folio FROM Solicitudes";
+    $result_ultimo_folio = $conn->query($sql_ultimo_folio);
+
+    if ($result_ultimo_folio) {
+        $row = $result_ultimo_folio->fetch_assoc();
+        $ultimo_folio = $row['max_folio'];
+        // Incrementa el último folio en 1 para el nuevo registro
+        $new_folio = $ultimo_folio + 1;
+    } else {
+        $new_folio = 1; // Si no hay registros en la base de datos, comienza en 1
+    }
+    // Cerrar la conexión a la base de datos
+    $conn->close();
+?>
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
