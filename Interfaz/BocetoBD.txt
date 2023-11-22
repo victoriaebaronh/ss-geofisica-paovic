@@ -8,3 +8,19 @@ CREATE TABLE Solicitudes (
     Descripcion_del_Servicio TEXT,
     Nombre_del_Usuario VARCHAR(255) NOT NULL
 );
+
+ALTER TABLE Solicitudes
+ADD COLUMN Nuevo_Folio VARCHAR(255) NOT NULL;
+
+
+UPDATE Solicitudes
+SET Nuevo_Folio = CONCAT('Folio: ', Folio);
+
+CREATE SEQUENCE nuevo_folio_sequence START WITH 1;
+
+UPDATE Solicitudes
+SET Folio = NEXTVAL('nuevo_folio_sequence');
+
+ALTER TABLE Solicitudes
+DROP COLUMN Nuevo_Folio;
+
