@@ -42,7 +42,7 @@
             // Procesar y guardar datos en la base de datos (conexión a la base de datos)
             $servername = "localhost";
             $username = "root";
-            $password = "Paolataemylove25";
+            $password = "PaoVic";
             $database = "Solicitudes";
 
             // Crear una conexión a la base de datos
@@ -114,16 +114,20 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
 
-    <!-- Pie de página -->
-    <footer class="text-center text-lg-start">
-        <div class="container-sm row">
-            <div class="col-sm-11 text-center" style="background-color: #f8f9fa;">
-                <p style="font-size: xx-small;">Hecho en México. Universidad Nacional Autónoma de México (UNAM), todos los
-                    derechos reservados 2022.
-                    Esta página puede ser reproducida con fines no lucrativos, siempre y cuando no se mutile, se cite la
-                    fuente completa y su dirección electrónica. De otra forma requiere permiso previo por escrito de la
-                    institución. Instituto de Geofísica, UNAM. Circuito de la Investigación Científica s/n, Ciudad
-                    Universitaria,
-                    Delegación Coyoacán, C.P. 04510, Ciudad de México.
-                    Sitio web administrado por el Ing. Daniel Rodríguez Osorio, danielro522@comunidad.unam.unam.mx
-                </
+        <footer class="bg-light text-center text-lg-start" style="padding:5%; margin-top: 4%">
+    <div class="container-sm row text-center">
+        <div class="col-sm-11 text-center" style="background-color: rgb(248,248,248);">
+            <p style="font-size:xx-small;">Hecho en México. Universidad Nacional Autónoma de México (UNAM), todos los
+                derechos reservados 2022.
+                Esta página puede ser reproducida con fines no lucrativos, siempre y cuando no se mutile, se cite la
+                fuente completa y su dirección electrónica. De otra forma requiere permiso previo por escrito de la
+                institución. Instituto de Geofísica, UNAM. Circuito de la Investigación Científica s/n, Ciudad
+                Univeritaria,
+                Delegación Coyoacán, C.P. 04510, Ciudad de México.
+                Sitio web administrado por el Ing. Daniel Rodríguez Osorio, danielro522@comunidad.unam.unam.mx</p>
+        </div>
+        <div class="col text-left">
+            <img src="unam-escudo-azul copia.png" class="img-fluid" alt="UNAM" style="width: 50px;">
+        </div>
+    </div>
+</footer>

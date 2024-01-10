@@ -1,1 +1,0 @@
-# ss-geofisica-paovic

@@ -3,7 +3,7 @@
     function conectarBD() {
         $servername = "localhost";
         $username = "root";
-        $password = "Paolataemylove25";
+        $password = "PaoVic";
         $database = "Solicitudes";
 
         // Crear una conexión a la base de datos
@@ -67,7 +67,7 @@
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container">
                     <a class="navbar-brand" href="#">
-                        <img src="geofisica.png" alt="Logo" width="20%">
+                        <img src="assets/geofisica.png" alt="Logo" width="20%">
                     </a>
                     <div class="mx-auto d-flex align-items-center">
                         <a class="navbar-brand" href="#">Instituto de Geofísica</a>
@@ -83,18 +83,18 @@
             <h3>Solicitud única de servicios</h3>
         </div>
 
-        <form action="formularioSTecnica.php" method="post" class="row g-3">
+        <form id="formularioSTecnica" action="../includes/formularioSTecnica.php" method="post" class="row g-3">
             <div class="col-md-8">
                 <label for="area_solicitante" class="form-label">Área solicitante</label>
-                <input type="text" class="form-control" id="area_solicitante" name="area_solicitante">
+                <input type="text" class="form-control" id="area_solicitante" name="area_solicitante" required>
             </div>
             <div class="col-4">
                 <label for="folio" class="form-label">Folio</label>
-                <input type="text" class="form-control" id="folio" name="folio" value="<?php echo $new_folio; ?>" readonly>
+                <input type="text" class="form-control" id="folio" name="folio" value="<?php echo date('Y') . '-' . $new_folio; ?>" readonly>
             </div>            
             <div class="col-md-8">
                 <label for="responsable_area" class="form-label">Responsable del área solicitante</label>
-                <input type="text" class="form-control" id="responsable_area" name="responsable_area">
+                <input type="text" class="form-control" id="responsable_area" name="responsable_area" required>
             </div>
             <div class="col-4">
                 <label for="fecha_solicitud" class="form-label">Fecha de solicitud</label>
@@ -102,15 +102,15 @@
             </div>
             <div class="col-md-8">
                 <label for="nombre_usuario" class="form-label">Nombre del usuario</label>
-                <input type="text" class="form-control" id="nombre_usuario" name="nombre_usuario">
+                <input type="text" class="form-control" id="nombre_usuario" name="nombre_usuario" required>
             </div>
             <div class="col-4">
                 <label for="telefono" class="form-label">Teléfono</label>
-                <input type="text" class="form-control" id="telefono" name="telefono">
+                <input type="text" class="form-control" id="telefono" name="telefono" required>
             </div>
             <div class="col-12">
                 <label for="correo_electronico" class="form-label">Correo electrónico</label>
-                <input type="email" class="form-control" id="correo_electronico" name="correo_electronico">
+                <input type="email" class="form-control" id="correo_electronico" name="correo_electronico" required>
             </div>
             
             <div class="form-group">
@@ -133,7 +133,7 @@
 </body>
 
 <footer class="bg-light text-center text-lg-start" style="padding:5%; margin-top: 4%">
-    <div class="container-sm row">
+    <div class="container-sm row text-center">
         <div class="col-sm-11 text-center" style="background-color: rgb(248,248,248);">
             <p style="font-size:xx-small;">Hecho en México. Universidad Nacional Autónoma de México (UNAM), todos los
                 derechos reservados 2022.
