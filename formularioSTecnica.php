@@ -16,7 +16,7 @@
             <nav class="navbar navbar-expand-lg navbar-light">
                 <div class="container">
                     <a class="navbar-brand" href="#">
-                        <img src="geofisica.png" alt="Logo" width="20%">
+                        <img src="assets/geofisica.png" alt="Logo" width="20%">
                     </a>
                     <div class="mx-auto d-flex align-items-center">
                         <a class="navbar-brand" href="#">Instituto de Geofísica</a>
@@ -115,7 +115,7 @@
         crossorigin="anonymous"></script>
 
         <footer class="bg-light text-center text-lg-start" style="padding:5%; margin-top: 4%">
-    <div class="container-sm row text-center">
+    <div class="container-sm row text-center" style="margin: auto;">
         <div class="col-sm-11 text-center" style="background-color: rgb(248,248,248);">
             <p style="font-size:xx-small;">Hecho en México. Universidad Nacional Autónoma de México (UNAM), todos los
                 derechos reservados 2022.
@@ -127,7 +127,7 @@
                 Sitio web administrado por el Ing. Daniel Rodríguez Osorio, danielro522@comunidad.unam.unam.mx</p>
         </div>
         <div class="col text-left">
-            <img src="unam-escudo-azul copia.png" class="img-fluid" alt="UNAM" style="width: 50px;">
+            <img src="assets/unam-escudo-azul copia.png" class="img-fluid" alt="UNAM" style="width: 50px;">
         </div>
     </div>
 </footer>
