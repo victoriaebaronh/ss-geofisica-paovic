@@ -27,46 +27,37 @@
         <div style="background-color: rgb(0,61,121); height: 5pt;"><br></div>
         <div style="background-color: rgb(213,159,28); height: 5pt;"><br></div>
 
+        <div class="container" style="height: 10px;">
+            <a href="#" style="font-size: 12px;">Volver</a>
+        </div>
+
         <div class="container text-center" style="padding:2%;">
-            <h3>Consulta de solicitudes:</h3>
+            <h3>Solicitudes:</h3>
         </div>
 
         <div class="selector-wrapper" style="width: 70%; margin: auto; text-align: center; ">
-            <select id="opciones" class="form-select form-select-sm" aria-label=".form-select-sm example">
-                <option selected>Elige una opción</option>
-                <option value="1">Ver todo</option>
-                <option value="2">Año actual</option>
-                <option value="3">Mes actual</option>
-                <option value="4">Hoy</option>
-                <option value="5">Ingresar manualmente</option>
-            </select>
-            <br>
-
-            <div class="elegir-fecha-wrapper" style="display: none;">
-                Este es el contenido de elegir-fecha-wrapper
-            </div>
-
-            <br>
-            <button type="submit" class="btn btn-primary"
-                style="width: 150px; margin: auto; font-size: 15px;">Consultar</button>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Folio</th>
+                        <th scope="col">Área</th>
+                        <th scope="col">Usuario</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row"><a href="#">2024-1</a></th>
+                        <td>Area1</td>
+                        <td>Paola</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
-
-    <script>
-        document.getElementById('opciones').addEventListener('change', function () {
-            var elegirFechaWrapper = document.querySelector('.elegir-fecha-wrapper');
-
-            if (this.value === '5') {
-                elegirFechaWrapper.style.display = 'block';
-            } else {
-                elegirFechaWrapper.style.display = 'none';
-            }
-        });
-    </script>
 </body>
 
 <footer class="bg-light text-center text-lg-start" style="padding:5%; margin-top: 4%;">
