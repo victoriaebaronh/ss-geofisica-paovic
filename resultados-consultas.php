@@ -45,11 +45,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row"><a href="#">2024-1</a></th>
-                        <td>Area1</td>
-                        <td>Paola</td>
-                    </tr>
+                    <?php
+                    include 'formularioSTecnica.php';
+                   
+                    $result = $conn->query($sql);
+
+                   
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<th scope='row'><a href='#'>" . $row["folio"] . "</a></th>";
+                            echo "<td>" . $row["area"] . "</td>";
+                            echo "<td>" . $row["usuario"] . "</td>";
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='3'>No se encontraron resultados.</td></tr>";
+                    }
+                    ?>
                 </tbody>
             </table>
         </div>
