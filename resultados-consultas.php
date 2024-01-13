@@ -47,6 +47,7 @@
                 <tbody>
                     <?php
                     include 'formularioSTecnica.php';
+                    include 'consultas.php';
                    
                     $result = $conn->query($sql);
 

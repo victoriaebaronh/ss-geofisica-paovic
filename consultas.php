@@ -34,33 +34,6 @@
             <h3>Consulta de solicitudes:</h3>
         </div>
          
-        <?php
-        
-        include 'formularioSTecnica.php';
-        if (isset($_POST['consultarBtn'])) {
-            
-            $opcion = $_POST['opciones'];
-
-            if ($opcion == '1') {
-
-                $sql = "SELECT * FROM Solicitudes";
-            } elseif ($opcion == '2') {
-               
-                $sql = "SELECT * FROM Solicitudes WHERE YEAR(Fecha) = YEAR(CURDATE())";
-            } elseif ($opcion == '3') {
-                $sql = "SELECT * FROM Solicitudes WHERE MONTH(fecha_columna) = MONTH(CURDATE()) AND YEAR(fecha_columna) = YEAR(CURDATE())";
-               
-            } elseif ($opcion == '4') {
-                $sql = "SELECT * FROM Solicitudes WHERE DATE(fecha_columna) = CURDATE()";
-
-            } elseif ($opcion ==  '5') {
-                // CALENDARIOS
-            }
-            
-           
-            //$result = $conn->query($sql);
-        }
-        ?>
 
         <form id="consultaForm" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">   
             <div class="selector-wrapper" style="width: 70%; margin: auto; text-align: center; ">
@@ -79,10 +52,38 @@
                 </div>
 
                 <br>
-                <button type="submit" class="btn btn-primary"
-                    style="width: 150px; margin: auto; font-size: 15px;">Consultar</button>
+                <button type="submit" name="consultarBtn" class="btn btn-primary" 
+                style="width: 150px; margin: auto; font-size: 15px;">Consultar</button>
             </div>
         </form>
+        <?php
+        
+        include 'formularioSTecnica.php';
+        if (isset($_POST['consultarBtn'])) {
+            
+            $opcion = $_POST['opciones'];
+
+            if ($opcion == '1') {
+
+                $sql = "SELECT * FROM Solicitudes";
+            } elseif ($opcion == '2') {
+               
+                $sql = "SELECT * FROM Solicitudes WHERE YEAR(Fecha) = YEAR(CURDATE())";
+            } elseif ($opcion == '3') {
+                $sql = "SELECT * FROM Solicitudes WHERE MONTH(Fecha) = MONTH(CURDATE()) AND YEAR(Fecha) = YEAR(CURDATE())";
+               
+            } elseif ($opcion == '4') {
+                $sql = "SELECT * FROM Solicitudes WHERE DATE(Fecha) = CURDATE()";
+
+            } elseif ($opcion ==  '5') {
+                // CALENDARIOS
+            }
+            
+           
+            //$result = $conn->query($sql);
+        }
+        ?>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
