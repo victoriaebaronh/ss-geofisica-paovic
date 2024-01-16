@@ -41,6 +41,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Formulario - Secretaría Técnica</title>
     <script>
+         // Función para validar el formato del correo electrónico
+        function validarCorreoElectronico(correo) {
+            // Expresión regular para validar el formato del correo electrónico
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(correo);
+        }
+
+        // Event listener para el envío del formulario
+        document.getElementById('formularioSTecnica').addEventListener('submit', function (event) {
+            var areaSolicitante = document.getElementById('area_solicitante').value;
+            var responsableArea = document.getElementById('responsable_area').value;
+            var fechaSolicitud = document.getElementById('fecha_solicitud').value;
+            var nombreUsuario = document.getElementById('nombre_usuario').value;
+            var telefono = document.getElementById('telefono').value;
+            var correoElectronicoInput = document.getElementById('correo_electronico');
+            var correoElectronicoValue = correoElectronicoInput.value;
+            var descripcion = document.getElementById('descripcion').value;
+
+            if (
+                areaSolicitante === '' ||
+                responsableArea === '' ||
+                fechaSolicitud === '' ||
+                nombreUsuario === '' ||
+                telefono === '' ||
+                correoElectronico === '' ||
+                descripcion === ''
+            ) {
+                // Mostrar un mensaje de error
+                alert('Todos los campos obligatorios deben estar llenos.');
+                event.preventDefault(); // Evitar que se envíe el formulario si la validación falla
+                return;
+            }
+
+
+            // Validar el formato del correo electrónico
+            if (!validarCorreoElectronico(correoElectronicoValue)) {
+                alert('Por favor, ingrese un correo electrónico válido.');
+                event.preventDefault(); // Evitar que se envíe el formulario si la validación falla
+            }
+        });
         // Función para obtener la fecha actual en el formato 'YYYY-MM-DD'
         function obtenerFechaActual() {
             const fecha = new Date();
@@ -51,10 +91,10 @@
         }
         // Función para establecer la fecha actual en el campo de entrada
         function establecerFechaActual() {
-            const fechaActual = obtenerFechaActual();
             document.getElementById('fecha_solicitud').value = fechaActual;
         }
         // Ejecutar la función al cargar la página
+            const fechaActual = obtenerFechaActual();
         window.onload = establecerFechaActual;
     </script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"

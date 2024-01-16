@@ -63,6 +63,11 @@
             $correo_electronico = test_input($_POST["correo_electronico"]);
             $descripcion = test_input($_POST["descripcion"]);
 
+            if (!filter_var($correo_electronico, FILTER_VALIDATE_EMAIL)) {
+                echo "Correo electrónico no válido";
+                exit();
+            }
+
             // Realizar la consulta SQL para insertar datos en la base de datos
             $sql = "INSERT INTO Solicitudes (Area_del_Solicitante, Nombre_del_Responsable, Telefono, Fecha, Correo_Electronico, Descripcion_del_Servicio, Nombre_del_Usuario) 
                     VALUES (?, ?, ?, ?, ?, ?, ?)";
