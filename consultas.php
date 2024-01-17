@@ -57,30 +57,30 @@
             </div>
         </form>
         <?php
-        
-        include 'formularioSTecnica.php';
+        include 'configDB.php';
+
         if (isset($_POST['consultarBtn'])) {
-            
             $opcion = $_POST['opciones'];
 
+            // Seleccionar todas las solicitudes
             if ($opcion == '1') {
-
                 $sql = "SELECT * FROM Solicitudes";
+                $stmt = conectarBD()->prepare($sql);
             } elseif ($opcion == '2') {
-               
+                // Seleccionar solicitudes del año actual
                 $sql = "SELECT * FROM Solicitudes WHERE YEAR(Fecha) = YEAR(CURDATE())";
+                $stmt = conectarBD()->prepare($sql);
             } elseif ($opcion == '3') {
+                // Seleccionar solicitudes del mes actual
                 $sql = "SELECT * FROM Solicitudes WHERE MONTH(Fecha) = MONTH(CURDATE()) AND YEAR(Fecha) = YEAR(CURDATE())";
-               
+                $stmt = conectarBD()->prepare($sql);
             } elseif ($opcion == '4') {
+                // Seleccionar solicitudes de hoy
                 $sql = "SELECT * FROM Solicitudes WHERE DATE(Fecha) = CURDATE()";
-
-            } elseif ($opcion ==  '5') {
-                // CALENDARIOS
+                $stmt = conectarBD()->prepare($sql);
+            } elseif ($opcion == '5') {
+                // Tratar la opción 5 según tus necesidades, por ejemplo, utilizando calendarios
             }
-            
-           
-            //$result = $conn->query($sql);
         }
         ?>
 

@@ -1,5 +1,6 @@
 <?php
-// Función para conectar a la base de datos
+   include 'configDB.php';
+   /*
     function conectarBD() {
         $servername = "localhost";
         $username = "root";
@@ -17,6 +18,7 @@
     }
 
     // Conectar a la base de datos para obtener el último folio
+    */
     $conn = conectarBD();
     $sql_ultimo_folio = "SELECT MAX(folio) AS max_folio FROM Solicitudes";
     $result_ultimo_folio = $conn->query($sql_ultimo_folio);

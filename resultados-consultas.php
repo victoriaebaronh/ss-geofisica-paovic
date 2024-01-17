@@ -45,25 +45,32 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
-                    include 'formularioSTecnica.php';
-                    include 'consultas.php';
-                   
-                    $result = $conn->query($sql);
+            <?php
+            include 'consultas.php';
 
-                   
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            echo "<tr>";
-                            echo "<th scope='row'><a href='#'>" . $row["folio"] . "</a></th>";
-                            echo "<td>" . $row["area"] . "</td>";
-                            echo "<td>" . $row["usuario"] . "</td>";
-                            echo "</tr>";
-                        }
-                    } else {
-                        echo "<tr><td colspan='3'>No se encontraron resultados.</td></tr>";
+            if ($stmt) {
+                $stmt->execute();
+
+                $result = $stmt->get_result();
+
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<th scope='row'><a href='#'>" . $row["folio"] . "</a></th>";
+                        echo "<td>" . $row["area"] . "</td>";
+                        echo "<td>" . $row["usuario"] . "</td>";
+                        echo "</tr>";
                     }
-                    ?>
+                } else {
+                    echo "<tr><td colspan='3'>No se encontraron resultados.</td></tr>";
+                }
+
+                $stmt->close();
+            } else {
+                echo "Error en la preparación de la consulta.";
+            }
+            ?>
+
                 </tbody>
             </table>
         </div>

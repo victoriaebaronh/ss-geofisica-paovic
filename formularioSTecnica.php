@@ -29,39 +29,45 @@
         <div style="background-color: rgb(213,159,28); height: 5pt;"></div>
 
         <?php
+
+        include 'configDB.php';
         // Definir una función para validar y limpiar los datos del formulario
-        function test_input($data) {
+        function test_input($data, $conn) {
             $data = trim($data);
             $data = stripslashes($data);
             $data = htmlspecialchars($data);
+            $data = mysqli_real_escape_string($conn, $data); // Evitar inyección SQL
             return $data;
         }
 
         // Verificar si el formulario ha sido enviado
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Procesar y guardar datos en la base de datos (conexión a la base de datos)
-            $servername = "localhost";
-            $username = "root";
-            $password = "PaoVic";
-            $database = "Solicitudes";
+            //$servername = "localhost";
+            //$username = "root";
+            //$password = "PaoVic";
+            //$database = "Solicitudes";
 
             // Crear una conexión a la base de datos
-            $conn = new mysqli($servername, $username, $password, $database);
+            //$conn = new mysqli($servername, $username, $password, $database);
 
             // Verificar la conexión
-            if ($conn->connect_error) {
-                die("Conexión fallida: " . $conn->connect_error);
-            }
+            //if ($conn->connect_error) {
+            //    die("Conexión fallida: " . $conn->connect_error);
+            //}
 
             // Limpiar y obtener los datos del formulario
-            $area_solicitante = test_input($_POST["area_solicitante"]);
-            $responsable_area = test_input($_POST["responsable_area"]);
-            $folio = test_input($_POST["folio"]);
-            $fecha_solicitud = test_input($_POST["fecha_solicitud"]);
-            $nombre_usuario = test_input($_POST["nombre_usuario"]);
-            $telefono = test_input($_POST["telefono"]);
-            $correo_electronico = test_input($_POST["correo_electronico"]);
-            $descripcion = test_input($_POST["descripcion"]);
+
+            $conn = conectarBD();
+            // Limpiar y obtener los datos del formulario
+            $area_solicitante = test_input($_POST["area_solicitante"], $conn);
+            $responsable_area = test_input($_POST["responsable_area"], $conn);
+            $folio = test_input($_POST["folio"], $conn);
+            $fecha_solicitud = test_input($_POST["fecha_solicitud"], $conn);
+            $nombre_usuario = test_input($_POST["nombre_usuario"], $conn);
+            $telefono = test_input($_POST["telefono"], $conn);
+            $correo_electronico = test_input($_POST["correo_electronico"], $conn);
+            $descripcion = test_input($_POST["descripcion"], $conn);
 
             if (!filter_var($correo_electronico, FILTER_VALIDATE_EMAIL)) {
                 echo "Correo electrónico no válido";
