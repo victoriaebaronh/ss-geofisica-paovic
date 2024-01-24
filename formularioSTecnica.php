@@ -69,6 +69,10 @@
             $correo_electronico = test_input($_POST["correo_electronico"], $conn);
             $descripcion = test_input($_POST["descripcion"], $conn);
 
+            if (empty($area_solicitante) || empty($responsable_area) || empty($fecha_solicitud) || empty($nombre_usuario) || empty($telefono) || empty($correo_electronico) || empty($descripcion)) {
+                echo "Todos los campos obligatorios deben estar llenos.";
+                exit();
+            }
             if (!filter_var($correo_electronico, FILTER_VALIDATE_EMAIL)) {
                 echo "Correo electrónico no válido";
                 exit();

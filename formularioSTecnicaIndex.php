@@ -49,7 +49,6 @@
             var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             return emailRegex.test(correo);
         }
-
         // Event listener para el envío del formulario
         document.getElementById('formularioSTecnica').addEventListener('submit', function (event) {
             var areaSolicitante = document.getElementById('area_solicitante').value;
