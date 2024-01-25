@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,6 +11,7 @@
         /* Estilos CSS adicionales si es necesario */
     </style>
 </head>
+
 <body>
     <div class="container-sm">
         <div class="row">
@@ -30,9 +32,25 @@
 
         <?php
 
-        include 'configDB.php';
+        function conectarBD()
+        {
+            $servername = "localhost";
+            $username = "root";
+            $password = "PaoVic";
+            $database = "Solicitudes";
+
+            // Crear una conexión a la base de datos
+            $conn = new mysqli($servername, $username, $password, $database);
+
+            // Verificar la conexión
+            if ($conn->connect_error) {
+                die("Conexión fallida: " . $conn->connect_error);
+            }
+            return $conn;
+        }
         // Definir una función para validar y limpiar los datos del formulario
-        function test_input($data, $conn) {
+        function test_input($data, $conn)
+        {
             $data = trim($data);
             $data = stripslashes($data);
             $data = htmlspecialchars($data);
@@ -47,17 +65,17 @@
             //$username = "root";
             //$password = "PaoVic";
             //$database = "Solicitudes";
-
+        
             // Crear una conexión a la base de datos
             //$conn = new mysqli($servername, $username, $password, $database);
-
+        
             // Verificar la conexión
             //if ($conn->connect_error) {
             //    die("Conexión fallida: " . $conn->connect_error);
             //}
-
+        
             // Limpiar y obtener los datos del formulario
-
+        
             $conn = conectarBD();
             // Limpiar y obtener los datos del formulario
             $area_solicitante = test_input($_POST["area_solicitante"], $conn);
@@ -110,16 +128,32 @@
 
         <!-- Contenido del formulario -->
         <div class="container">
-            <?php if (isset($folioGenerado)) : ?>
+            <?php if (isset($folioGenerado)): ?>
                 <h3>Tu información fue enviada con éxito:</h3>
-                <p><strong>Área Solicitante:</strong> <?php echo $area_solicitante; ?></p>
-                <p><strong>Folio:</strong> <?php echo $folioGenerado; ?></p>
-                <p><strong>Responsable del Área Solicitante:</strong> <?php echo $responsable_area; ?></p>
-                <p><strong>Fecha de Solicitud:</strong> <?php echo $fecha_solicitud; ?></p>
-                <p><strong>Nombre del Usuario:</strong> <?php echo $nombre_usuario; ?></p>
-                <p><strong>Teléfono:</strong> <?php echo $telefono; ?></p>
-                <p><strong>Correo Electrónico:</strong> <?php echo $correo_electronico; ?></p>
-                <p><strong>Descripción del Servicio:</strong> <?php echo $descripcion; ?></p>
+                <p><strong>Área Solicitante:</strong>
+                    <?php echo $area_solicitante; ?>
+                </p>
+                <p><strong>Folio:</strong>
+                    <?php echo $folioGenerado; ?>
+                </p>
+                <p><strong>Responsable del Área Solicitante:</strong>
+                    <?php echo $responsable_area; ?>
+                </p>
+                <p><strong>Fecha de Solicitud:</strong>
+                    <?php echo $fecha_solicitud; ?>
+                </p>
+                <p><strong>Nombre del Usuario:</strong>
+                    <?php echo $nombre_usuario; ?>
+                </p>
+                <p><strong>Teléfono:</strong>
+                    <?php echo $telefono; ?>
+                </p>
+                <p><strong>Correo Electrónico:</strong>
+                    <?php echo $correo_electronico; ?>
+                </p>
+                <p><strong>Descripción del Servicio:</strong>
+                    <?php echo $descripcion; ?>
+                </p>
             <?php endif; ?>
         </div>
 
@@ -129,20 +163,21 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
 
-        <footer class="bg-light text-center text-lg-start" style="padding:5%; margin-top: 4%">
-    <div class="container-sm row text-center" style="margin: auto;">
-        <div class="col-sm-11 text-center" style="background-color: rgb(248,248,248);">
-            <p style="font-size:xx-small;">Hecho en México. Universidad Nacional Autónoma de México (UNAM), todos los
-                derechos reservados 2022.
-                Esta página puede ser reproducida con fines no lucrativos, siempre y cuando no se mutile, se cite la
-                fuente completa y su dirección electrónica. De otra forma requiere permiso previo por escrito de la
-                institución. Instituto de Geofísica, UNAM. Circuito de la Investigación Científica s/n, Ciudad
-                Univeritaria,
-                Delegación Coyoacán, C.P. 04510, Ciudad de México.
-                Sitio web administrado por el Ing. Daniel Rodríguez Osorio, danielro522@comunidad.unam.unam.mx</p>
+    <footer class="bg-light text-center text-lg-start" style="padding:5%; margin-top: 4%">
+        <div class="container-sm row text-center" style="margin: auto;">
+            <div class="col-sm-11 text-center" style="background-color: rgb(248,248,248);">
+                <p style="font-size:xx-small;">Hecho en México. Universidad Nacional Autónoma de México (UNAM), todos
+                    los
+                    derechos reservados 2022.
+                    Esta página puede ser reproducida con fines no lucrativos, siempre y cuando no se mutile, se cite la
+                    fuente completa y su dirección electrónica. De otra forma requiere permiso previo por escrito de la
+                    institución. Instituto de Geofísica, UNAM. Circuito de la Investigación Científica s/n, Ciudad
+                    Univeritaria,
+                    Delegación Coyoacán, C.P. 04510, Ciudad de México.
+                    Sitio web administrado por el Ing. Daniel Rodríguez Osorio, danielro522@comunidad.unam.unam.mx</p>
+            </div>
+            <div class="col text-left">
+                <img src="assets/unam-escudo-azul copia.png" class="img-fluid" alt="UNAM" style="width: 50px;">
+            </div>
         </div>
-        <div class="col text-left">
-            <img src="assets/unam-escudo-azul copia.png" class="img-fluid" alt="UNAM" style="width: 50px;">
-        </div>
-    </div>
-</footer>
+    </footer>

@@ -1,3 +1,64 @@
+<?php
+// include 'configDB.php';
+function conectarBD()
+{
+    $servername = "localhost";
+    $username = "root";
+    $password = "PaoVic";
+    $database = "Solicitudes";
+
+    // Crear una conexión a la base de datos
+    $conn = new mysqli($servername, $username, $password, $database);
+
+    // Verificar la conexión
+    if ($conn->connect_error) {
+        die("Conexión fallida: " . $conn->connect_error);
+    }
+    return $conn;
+}
+
+// Conectar a la base de datos para obtener el último folio
+
+$conn = conectarBD();
+$sql_ultimo_folio = "SELECT MAX(folio) AS max_folio FROM Solicitudes";
+$result_ultimo_folio = $conn->query($sql_ultimo_folio);
+
+if ($result_ultimo_folio) {
+    $row = $result_ultimo_folio->fetch_assoc();
+    $ultimo_folio = $row['max_folio'];
+    // Incrementa el último folio en 1 para el nuevo registro
+    $new_folio = $ultimo_folio + 1;
+} else {
+    $new_folio = 1; // Si no hay registros en la base de datos, comienza en 1
+}
+// Cerrar la conexión a la base de datos
+$conn->close();
+
+if (isset($_POST['consultarBtn'])) {
+    $opcion = $_POST['opciones'];
+
+    // Seleccionar todas las solicitudes
+    if ($opcion == '1') {
+        $sql = "SELECT * FROM Solicitudes";
+        $stmt = conectarBD()->prepare($sql);
+    } elseif ($opcion == '2') {
+        // Seleccionar solicitudes del año actual
+        $sql = "SELECT * FROM Solicitudes WHERE YEAR(Fecha) = YEAR(CURDATE())";
+        $stmt = conectarBD()->prepare($sql);
+    } elseif ($opcion == '3') {
+        // Seleccionar solicitudes del mes actual
+        $sql = "SELECT * FROM Solicitudes WHERE MONTH(Fecha) = MONTH(CURDATE()) AND YEAR(Fecha) = YEAR(CURDATE())";
+        $stmt = conectarBD()->prepare($sql);
+    } elseif ($opcion == '4') {
+        // Seleccionar solicitudes de hoy
+        $sql = "SELECT * FROM Solicitudes WHERE DATE(Fecha) = CURDATE()";
+        $stmt = conectarBD()->prepare($sql);
+    } elseif ($opcion == '5') {
+        // fechas elegidas manualmente
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -46,7 +107,6 @@
                 </thead>
                 <tbody>
             <?php
-            include 'consultas.php';
 
             if ($stmt) {
                 $stmt->execute();

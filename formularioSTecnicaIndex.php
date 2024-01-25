@@ -1,38 +1,38 @@
 <?php
-   include 'configDB.php';
-   /*
-    function conectarBD() {
-        $servername = "localhost";
-        $username = "root";
-        $password = "PaoVic";
-        $database = "Solicitudes";
+// include 'configDB.php';
+function conectarBD()
+{
+    $servername = "localhost";
+    $username = "root";
+    $password = "PaoVic";
+    $database = "Solicitudes";
 
-        // Crear una conexión a la base de datos
-        $conn = new mysqli($servername, $username, $password, $database);
+    // Crear una conexión a la base de datos
+    $conn = new mysqli($servername, $username, $password, $database);
 
-        // Verificar la conexión
-        if ($conn->connect_error) {
-            die("Conexión fallida: " . $conn->connect_error);
-        }
-        return $conn;
+    // Verificar la conexión
+    if ($conn->connect_error) {
+        die("Conexión fallida: " . $conn->connect_error);
     }
+    return $conn;
+}
 
-    // Conectar a la base de datos para obtener el último folio
-    */
-    $conn = conectarBD();
-    $sql_ultimo_folio = "SELECT MAX(folio) AS max_folio FROM Solicitudes";
-    $result_ultimo_folio = $conn->query($sql_ultimo_folio);
+// Conectar a la base de datos para obtener el último folio
 
-    if ($result_ultimo_folio) {
-        $row = $result_ultimo_folio->fetch_assoc();
-        $ultimo_folio = $row['max_folio'];
-        // Incrementa el último folio en 1 para el nuevo registro
-        $new_folio = $ultimo_folio + 1;
-    } else {
-        $new_folio = 1; // Si no hay registros en la base de datos, comienza en 1
-    }
-    // Cerrar la conexión a la base de datos
-    $conn->close();
+$conn = conectarBD();
+$sql_ultimo_folio = "SELECT MAX(folio) AS max_folio FROM Solicitudes";
+$result_ultimo_folio = $conn->query($sql_ultimo_folio);
+
+if ($result_ultimo_folio) {
+    $row = $result_ultimo_folio->fetch_assoc();
+    $ultimo_folio = $row['max_folio'];
+    // Incrementa el último folio en 1 para el nuevo registro
+    $new_folio = $ultimo_folio + 1;
+} else {
+    $new_folio = 1; // Si no hay registros en la base de datos, comienza en 1
+}
+// Cerrar la conexión a la base de datos
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -43,7 +43,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Formulario - Secretaría Técnica</title>
     <script>
-         // Función para validar el formato del correo electrónico
+        // Función para obtener la fecha actual en el formato 'YYYY-MM-DD'
+        function obtenerFechaActual() {
+            const fecha = new Date();
+            const year = fecha.getFullYear();
+            const month = String(fecha.getMonth() + 1).padStart(2, '0');
+            const day = String(fecha.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+        // Función para establecer la fecha actual en el campo de entrada
+        function establecerFechaActual() {
+            document.getElementById('fecha_solicitud').value = fechaActual;
+        }
+        // Ejecutar la función al cargar la página
+        const fechaActual = obtenerFechaActual();
+        window.onload = establecerFechaActual;
+        // Función para validar el formato del correo electrónico
         function validarCorreoElectronico(correo) {
             // Expresión regular para validar el formato del correo electrónico
             var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -82,21 +97,8 @@
                 event.preventDefault(); // Evitar que se envíe el formulario si la validación falla
             }
         });
-        // Función para obtener la fecha actual en el formato 'YYYY-MM-DD'
-        function obtenerFechaActual() {
-            const fecha = new Date();
-            const year = fecha.getFullYear();
-            const month = String(fecha.getMonth() + 1).padStart(2, '0');
-            const day = String(fecha.getDate()).padStart(2, '0');
-            return `${year}-${month}-${day}`;
-        }
-        // Función para establecer la fecha actual en el campo de entrada
-        function establecerFechaActual() {
-            document.getElementById('fecha_solicitud').value = fechaActual;
-        }
-        // Ejecutar la función al cargar la página
-            const fechaActual = obtenerFechaActual();
-        window.onload = establecerFechaActual;
+
+
     </script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -124,15 +126,16 @@
             <h3>Solicitud única de servicios</h3>
         </div>
 
-        <form id="formularioSTecnica" action="../includes/formularioSTecnica.php" method="post" class="row g-3">
+        <form id="formularioSTecnica" action="/formularioSTecnica.php" method="post" class="row g-3">
             <div class="col-md-8">
                 <label for="area_solicitante" class="form-label">Área solicitante</label>
                 <input type="text" class="form-control" id="area_solicitante" name="area_solicitante" required>
             </div>
             <div class="col-4">
                 <label for="folio" class="form-label">Folio</label>
-                <input type="text" class="form-control" id="folio" name="folio" value="<?php echo date('Y') . '-' . $new_folio; ?>" readonly>
-            </div>            
+                <input type="text" class="form-control" id="folio" name="folio"
+                    value="<?php echo date('Y') . '-' . $new_folio; ?>" readonly>
+            </div>
             <div class="col-md-8">
                 <label for="responsable_area" class="form-label">Responsable del área solicitante</label>
                 <input type="text" class="form-control" id="responsable_area" name="responsable_area" required>
@@ -153,11 +156,11 @@
                 <label for="correo_electronico" class="form-label">Correo electrónico</label>
                 <input type="email" class="form-control" id="correo_electronico" name="correo_electronico" required>
             </div>
-            
+
             <div class="form-group">
                 <label for="descripcion">Descripción del Servicio: </label>
-                <textarea class="form-control" id="descripcion" rows="3"  name="descripcion"
-                placeholder="Especificar claramente fecha y hora del servicio requerido"></textarea>
+                <textarea class="form-control" id="descripcion" rows="3" name="descripcion"
+                    placeholder="Especificar claramente fecha y hora del servicio requerido"></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Enviar</button>
         </form>

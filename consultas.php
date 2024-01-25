@@ -1,3 +1,64 @@
+<?php
+// include 'configDB.php';
+function conectarBD()
+{
+    $servername = "localhost";
+    $username = "root";
+    $password = "PaoVic";
+    $database = "Solicitudes";
+
+    // Crear una conexión a la base de datos
+    $conn = new mysqli($servername, $username, $password, $database);
+
+    // Verificar la conexión
+    if ($conn->connect_error) {
+        die("Conexión fallida: " . $conn->connect_error);
+    }
+    return $conn;
+}
+
+// Conectar a la base de datos para obtener el último folio
+
+$conn = conectarBD();
+$sql_ultimo_folio = "SELECT MAX(folio) AS max_folio FROM Solicitudes";
+$result_ultimo_folio = $conn->query($sql_ultimo_folio);
+
+if ($result_ultimo_folio) {
+    $row = $result_ultimo_folio->fetch_assoc();
+    $ultimo_folio = $row['max_folio'];
+    // Incrementa el último folio en 1 para el nuevo registro
+    $new_folio = $ultimo_folio + 1;
+} else {
+    $new_folio = 1; // Si no hay registros en la base de datos, comienza en 1
+}
+// Cerrar la conexión a la base de datos
+$conn->close();
+
+if (isset($_POST['consultarBtn'])) {
+    $opcion = $_POST['opciones'];
+
+    // Seleccionar todas las solicitudes
+    if ($opcion == '1') {
+        $sql = "SELECT * FROM Solicitudes";
+        $stmt = conectarBD()->prepare($sql);
+    } elseif ($opcion == '2') {
+        // Seleccionar solicitudes del año actual
+        $sql = "SELECT * FROM Solicitudes WHERE YEAR(Fecha) = YEAR(CURDATE())";
+        $stmt = conectarBD()->prepare($sql);
+    } elseif ($opcion == '3') {
+        // Seleccionar solicitudes del mes actual
+        $sql = "SELECT * FROM Solicitudes WHERE MONTH(Fecha) = MONTH(CURDATE()) AND YEAR(Fecha) = YEAR(CURDATE())";
+        $stmt = conectarBD()->prepare($sql);
+    } elseif ($opcion == '4') {
+        // Seleccionar solicitudes de hoy
+        $sql = "SELECT * FROM Solicitudes WHERE DATE(Fecha) = CURDATE()";
+        $stmt = conectarBD()->prepare($sql);
+    } elseif ($opcion == '5') {
+        // fechas elegidas manualmente
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +72,7 @@
 
 <body style="min-height: 100vh; display: flex; flex-direction: column;">
     <div class="container-sm" style="flex: 1;">
-        
+
         <div class="row">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container">
@@ -28,14 +89,13 @@
         <div style="background-color: rgb(0,61,121); height: 5pt;"><br></div>
         <div style="background-color: rgb(213,159,28); height: 5pt;"><br></div>
 
-        
+
 
         <div class="container text-center" style="padding:2%;">
             <h3>Consulta de solicitudes:</h3>
         </div>
-         
 
-        <form id="consultaForm" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">   
+        <form id="consultaForm" action="../resultados-consultas.php" method="post">
             <div class="selector-wrapper" style="width: 70%; margin: auto; text-align: center; ">
                 <select id="opciones" class="form-select form-select-sm" aria-label=".form-select-sm example">
                     <option selected>Elige una opción</option>
@@ -52,37 +112,11 @@
                 </div>
 
                 <br>
-                <button type="submit" name="consultarBtn" class="btn btn-primary" 
-                style="width: 150px; margin: auto; font-size: 15px;">Consultar</button>
+                <button type="submit" name="consultarBtn" class="btn btn-primary"
+                    style="width: 150px; margin: auto; font-size: 15px;">Consultar</button>
             </div>
         </form>
-        <?php
-        include 'configDB.php';
 
-        if (isset($_POST['consultarBtn'])) {
-            $opcion = $_POST['opciones'];
-
-            // Seleccionar todas las solicitudes
-            if ($opcion == '1') {
-                $sql = "SELECT * FROM Solicitudes";
-                $stmt = conectarBD()->prepare($sql);
-            } elseif ($opcion == '2') {
-                // Seleccionar solicitudes del año actual
-                $sql = "SELECT * FROM Solicitudes WHERE YEAR(Fecha) = YEAR(CURDATE())";
-                $stmt = conectarBD()->prepare($sql);
-            } elseif ($opcion == '3') {
-                // Seleccionar solicitudes del mes actual
-                $sql = "SELECT * FROM Solicitudes WHERE MONTH(Fecha) = MONTH(CURDATE()) AND YEAR(Fecha) = YEAR(CURDATE())";
-                $stmt = conectarBD()->prepare($sql);
-            } elseif ($opcion == '4') {
-                // Seleccionar solicitudes de hoy
-                $sql = "SELECT * FROM Solicitudes WHERE DATE(Fecha) = CURDATE()";
-                $stmt = conectarBD()->prepare($sql);
-            } elseif ($opcion == '5') {
-                // Tratar la opción 5 según tus necesidades, por ejemplo, utilizando calendarios
-            }
-        }
-        ?>
 
     </div>
 
