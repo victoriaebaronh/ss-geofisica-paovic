@@ -89,21 +89,16 @@ $conn->close();
                 event.preventDefault(); // Evitar que se envíe el formulario si la validación falla
                 return;
             }
-
-
             // Validar el formato del correo electrónico
             if (!validarCorreoElectronico(correoElectronicoValue)) {
                 alert('Por favor, ingrese un correo electrónico válido.');
                 event.preventDefault(); // Evitar que se envíe el formulario si la validación falla
             }
         });
-
-
     </script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
-
 <body>
     <div class="container-sm">
         <div class="row">
@@ -156,7 +151,6 @@ $conn->close();
                 <label for="correo_electronico" class="form-label">Correo electrónico</label>
                 <input type="email" class="form-control" id="correo_electronico" name="correo_electronico" required>
             </div>
-
             <div class="form-group">
                 <label for="descripcion">Descripción del Servicio: </label>
                 <textarea class="form-control" id="descripcion" rows="3" name="descripcion"
@@ -164,10 +158,6 @@ $conn->close();
             </div>
             <button type="submit" class="btn btn-primary">Enviar</button>
         </form>
-
-
-
-
     </div>
 
 

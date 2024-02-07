@@ -31,28 +31,30 @@ if ($result_ultimo_folio) {
 } else {
     $new_folio = 1; // Si no hay registros en la base de datos, comienza en 1
 }
-// Cerrar la conexión a la base de datos
-$conn->close();
 
 if (isset($_POST['consultarBtn'])) {
     $opcion = $_POST['opciones'];
 
     // Seleccionar todas las solicitudes
     if ($opcion == '1') {
-        $sql = "SELECT * FROM Solicitudes";
-        $stmt = conectarBD()->prepare($sql);
-    } elseif ($opcion == '2') {
-        // Seleccionar solicitudes del año actual
-        $sql = "SELECT * FROM Solicitudes WHERE YEAR(Fecha) = YEAR(CURDATE())";
-        $stmt = conectarBD()->prepare($sql);
+        $sql = "SELECT Folio,Area_del_Solicitante,Nombre_del_Usuario FROM Solicitudes";
+        $stmt = $conn->prepare($sql);
+        $sql = "SELECT Folio,Area_del_Solicitante,Nombre_del_Usuario FROM Solicitudes WHERE YEAR(Fecha) = YEAR(CURDATE())";
+        $stmt = $conn->prepare($sql);
     } elseif ($opcion == '3') {
         // Seleccionar solicitudes del mes actual
-        $sql = "SELECT * FROM Solicitudes WHERE MONTH(Fecha) = MONTH(CURDATE()) AND YEAR(Fecha) = YEAR(CURDATE())";
-        $stmt = conectarBD()->prepare($sql);
+    } elseif ($opcion == '2') {
+        // Seleccionar solicitudes del año actual
+        $sql = "SELECT Folio,Area_del_Solicitante,Nombre_del_Usuario FROM Solicitudes WHERE YEAR(Fecha) = YEAR(CURDATE())";
+        $stmt = $conn->prepare($sql);
+    } elseif ($opcion == '3') {
+        // Seleccionar solicitudes del mes actual
+        $sql = "SELECT Folio,Area_del_Solicitante,Nombre_del_Usuario FROM Solicitudes WHERE MONTH(Fecha) = MONTH(CURDATE()) AND YEAR(Fecha) = YEAR(CURDATE())";
+        $stmt = $conn->prepare($sql);
     } elseif ($opcion == '4') {
         // Seleccionar solicitudes de hoy
-        $sql = "SELECT * FROM Solicitudes WHERE DATE(Fecha) = CURDATE()";
-        $stmt = conectarBD()->prepare($sql);
+        $sql = "SELECT Folio,Area_del_Solicitante,Nombre_del_Usuario FROM Solicitudes WHERE DATE(Fecha) = CURDATE()";
+        $stmt = $conn->prepare($sql);
     } elseif ($opcion == '5') {
         // fechas elegidas manualmente
     }

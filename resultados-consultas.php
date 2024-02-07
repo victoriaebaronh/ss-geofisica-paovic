@@ -33,30 +33,6 @@ if ($result_ultimo_folio) {
 }
 // Cerrar la conexión a la base de datos
 $conn->close();
-
-if (isset($_POST['consultarBtn'])) {
-    $opcion = $_POST['opciones'];
-
-    // Seleccionar todas las solicitudes
-    if ($opcion == '1') {
-        $sql = "SELECT * FROM Solicitudes";
-        $stmt = conectarBD()->prepare($sql);
-    } elseif ($opcion == '2') {
-        // Seleccionar solicitudes del año actual
-        $sql = "SELECT * FROM Solicitudes WHERE YEAR(Fecha) = YEAR(CURDATE())";
-        $stmt = conectarBD()->prepare($sql);
-    } elseif ($opcion == '3') {
-        // Seleccionar solicitudes del mes actual
-        $sql = "SELECT * FROM Solicitudes WHERE MONTH(Fecha) = MONTH(CURDATE()) AND YEAR(Fecha) = YEAR(CURDATE())";
-        $stmt = conectarBD()->prepare($sql);
-    } elseif ($opcion == '4') {
-        // Seleccionar solicitudes de hoy
-        $sql = "SELECT * FROM Solicitudes WHERE DATE(Fecha) = CURDATE()";
-        $stmt = conectarBD()->prepare($sql);
-    } elseif ($opcion == '5') {
-        // fechas elegidas manualmente
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -106,31 +82,25 @@ if (isset($_POST['consultarBtn'])) {
                     </tr>
                 </thead>
                 <tbody>
+                
             <?php
-
+            require 'consultas.php';
             if ($stmt) {
                 $stmt->execute();
-
                 $result = $stmt->get_result();
-
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
                         echo "<tr>";
-                        echo "<th scope='row'><a href='#'>" . $row["folio"] . "</a></th>";
-                        echo "<td>" . $row["area"] . "</td>";
-                        echo "<td>" . $row["usuario"] . "</td>";
+                        echo "<th scope='row'><a href='#'>" . $row["Folio"] . "</a></th>";
+                        echo "<td>" . $row["Area_del_Solicitante"] . "</td>";
+                        echo "<td>" . $row["Nombre_del_Usuario"] . "</td>";
                         echo "</tr>";
                     }
                 } else {
                     echo "<tr><td colspan='3'>No se encontraron resultados.</td></tr>";
                 }
-
-                $stmt->close();
-            } else {
-                echo "Error en la preparación de la consulta.";
             }
-            ?>
-
+            ?>  
                 </tbody>
             </table>
         </div>
